@@ -12,7 +12,6 @@
   .bg{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:.3;pointer-events:none}
   .app{position:relative;z-index:10;width:100%;height:100vh;display:flex;flex-direction:column;justify-content:space-between}
 
-  /* topo */
   .top-bar{display:flex;justify-content:space-between;align-items:center;padding:6px 10px;background:rgba(0,0,0,.6);backdrop-filter:blur(8px);border-bottom:2px solid var(--cor);gap:4px;flex-shrink:0}
   .genre-badge{background:rgba(255,255,255,.08);padding:3px 8px;border-radius:30px;font-size:.55rem;font-weight:700;color:#fff;border-left:2px solid var(--cor);display:flex;align-items:center;gap:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:38%;cursor:pointer}
   .top-buttons{display:flex;gap:4px;align-items:center;flex-shrink:0}
@@ -31,18 +30,16 @@
   @keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.3}}
   .menu-button{background:rgba(255,255,255,.05);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.7rem;cursor:pointer;border:1px solid rgba(255,255,255,.2)}
   .menu-button:active{background:var(--cor);color:#000}
-  .menu-popup{position:absolute;top:42px;right:8px;background:rgba(0,0,0,.95);backdrop-filter:blur(10px);border-radius:16px;padding:6px;z-index:32;display:none;flex-direction:column;gap:4px;border:1px solid var(--cor);min-width:150px}
+  .menu-popup{position:absolute;top:42px;right:8px;background:rgba(0,0,0,.95);backdrop-filter:blur(10px);border-radius:16px;padding:6px;z-index:32;display:none;flex-direction:column;gap:4px;border:1px solid var(--cor);min-width:170px}
   .menu-popup.open{display:flex}
   .menu-popup button{background:rgba(255,255,255,.08);border:none;color:#fff;padding:6px 12px;border-radius:30px;font-size:.6rem;display:flex;align-items:center;gap:6px;cursor:pointer;text-align:left}
   .menu-popup button:active{background:var(--cor);color:#000}
   .menu-popup .close-menu-btn{background:rgba(255,45,127,.2);border:1px solid #ff2d7f;color:#ff2d7f}
 
-  /* faixa rolando */
   .info-scroll{position:fixed;top:42px;left:0;right:0;background:rgba(0,0,0,.5);backdrop-filter:blur(8px);padding:6px 12px;z-index:30;border-bottom:1px solid rgba(255,255,255,.05);overflow:hidden;white-space:nowrap}
   .info-scroll p{color:#fff;font-size:.85rem;font-weight:900;letter-spacing:2px;animation:scrollText 20s linear infinite;display:inline-block;padding-right:50px;text-transform:uppercase}
   @keyframes scrollText{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
 
-  /* now playing */
   .now-playing{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;z-index:15;width:90%;max-width:400px;user-select:none}
   .music-title{color:#fff;font-size:1.4rem;font-weight:700;text-shadow:0 0 30px rgba(0,0,0,.9);margin-bottom:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .music-artist{color:#eee;font-size:1rem;font-weight:300;text-shadow:0 0 30px rgba(0,0,0,.9);margin-bottom:8px}
@@ -65,11 +62,9 @@
   @keyframes equalize{0%{height:4px;opacity:.5}100%{height:30px;opacity:1}}
   .equalizer.paused span{animation-play-state:paused;height:4px!important;opacity:.3!important}
 
-  /* barra de ensino */
   .teaching-bar{position:fixed;bottom:115px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.7);backdrop-filter:blur(12px);padding:6px 22px;border-radius:40px;font-size:.6rem;font-weight:800;color:#ddd;z-index:26;pointer-events:none;border:1px solid rgba(255,255,255,.05);white-space:nowrap}
   .teaching-bar .cyan{color:var(--cor);font-weight:900}
 
-  /* controles */
   .bottom-controls{position:fixed;bottom:0;left:0;right:0;background:rgba(0,0,0,.7);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,.05);padding:6px 12px 10px;z-index:20;transform:translateY(100%);transition:transform .3s ease}
   .bottom-controls.visible{transform:translateY(0)}
   .progress-time{display:flex;justify-content:space-between;font-size:.5rem;color:#aaa;margin-bottom:2px}
@@ -82,7 +77,6 @@
   .shuffle-btn{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:#fff;font-size:.7rem;width:34px;height:34px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center}
   .shuffle-btn.active{background:var(--cor);color:#000;border-color:var(--cor)}
 
-  /* fab */
   .fab-container{position:fixed;bottom:100px;right:12px;z-index:40;display:flex;flex-direction:column;align-items:flex-end;gap:6px}
   .fab-main{background:linear-gradient(135deg,#3a3a3a,#1a1a1a);width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#fff;font-size:1.2rem;border:1px solid rgba(255,255,255,.1)}
   .fab-main:active{transform:scale(.92)}
@@ -91,12 +85,11 @@
   .fab-sub-btn{background:rgba(255,255,255,.05);border:none;color:#fff;padding:6px 14px;border-radius:25px;font-size:.65rem;cursor:pointer;display:flex;align-items:center;gap:6px;white-space:nowrap;min-width:100px}
   .fab-sub-btn:active{background:var(--cor);color:#000}
 
-  /* splash */
   #splash{position:fixed;inset:0;background:#0a0a0a;display:flex;align-items:center;justify-content:center;z-index:9999;transition:opacity .5s}
   #splash.hidden{opacity:0;pointer-events:none}
-  .splash-loading{text-align:center;color:#fff}
+  .splash-loading{text-align:center;color:#fff;padding:0 20px}
   .splash-loading i{font-size:2rem;color:var(--cor)}
-  .splash-loading p{margin-top:10px;font-size:.85rem}
+  .splash-loading p{margin-top:10px;font-size:.85rem;line-height:1.5}
   #tap-to-start{position:fixed;bottom:30%;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#4ade80,#22c55e);color:#000;padding:14px 28px;border-radius:60px;font-weight:900;font-size:1.1rem;z-index:10000;cursor:pointer;display:none;animation:btnPulse 1.5s infinite;border:none;box-shadow:0 0 40px rgba(74,222,128,.6);letter-spacing:1.5px;text-transform:uppercase;white-space:nowrap}
   @keyframes btnPulse{0%{transform:translateX(-50%) scale(1);opacity:.9}50%{transform:translateX(-50%) scale(1.04);opacity:1}100%{transform:translateX(-50%) scale(1);opacity:.9}}
   .notification{position:fixed;top:52px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.85);backdrop-filter:blur(10px);color:var(--cor);padding:4px 14px;border-radius:30px;font-size:.55rem;z-index:10001;opacity:0;transition:opacity .3s;pointer-events:none;border-left:3px solid var(--cor);white-space:nowrap;max-width:90vw;overflow:hidden;text-overflow:ellipsis}
@@ -106,7 +99,6 @@
   #loadingOverlay i{font-size:3rem;color:var(--cor);animation:spin 1s linear infinite}
   @keyframes spin{to{transform:rotate(360deg)}}
 
-  /* modal favoritos */
   .fav-modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.9);background:rgba(20,20,40,.95);backdrop-filter:blur(20px);border-radius:30px;padding:25px;z-index:5000;width:90%;max-width:380px;text-align:center;display:none;flex-direction:column;opacity:0;transition:all .3s ease;border:2px solid var(--cor)}
   .fav-modal.open{display:flex;opacity:1;transform:translate(-50%,-50%) scale(1)}
   .fav-modal h3{font-size:1.2rem;margin-bottom:15px;color:var(--cor)}
@@ -236,16 +228,20 @@
 
 <script>
 /* ============================================================
-   CONFIG — ajustado para "Músicas Variadas"
+   CONFIG — GitHub Pages (resolve o problema do Raw)
    ============================================================ */
 const CONFIG = {
   genero: 'MÚSICAS VARIADAS',
   cor: '#cc44ff',
-  jsonUrl: 'https://raw.githubusercontent.com/paticotv01-code/Listavariada-/refs/heads/main/music.json',
-  baseUrl: 'https://raw.githubusercontent.com/paticotv01-code/Listavariada-/refs/heads/main/',
+  // ✅ GitHub Pages: serve os arquivos com Content-Type correto
+  jsonUrl: 'https://paticotv01-code.github.io/Listavariada-/music.json',
+  baseUrl: 'https://paticotv01-code.github.io/Listavariada-/',
+  // Fallback: se o Pages falhar, tenta o Raw (pode não tocar em alguns navegadores)
+  jsonUrlFallback: 'https://raw.githubusercontent.com/paticotv01-code/Listavariada-/refs/heads/main/music.json',
+  baseUrlFallback: 'https://raw.githubusercontent.com/paticotv01-code/Listavariada-/refs/heads/main/',
   storageKeyFav: 'radio_favorites_variadas',
   storageKeySrc: 'radio_src_cache_variadas',
-  timeoutTentativa: 7000,
+  timeoutTentativa: 8000,
   maxTentativasMostrar: 4
 };
 
@@ -266,6 +262,7 @@ let hideControlsTimeout = null;
 let carregandoMusica = false;
 let buscaTimeout = null;
 let tentativaAtual = null;
+let usandoFallback = false;
 
 /* ============================================================
    DOM
@@ -343,10 +340,11 @@ function voltarPlay12() { window.location.href = 'https://radiolojasjc-hub.githu
 function urlCompleta(nome) {
   if (!nome || !nome.trim()) return '';
   if (/^https?:\/\//i.test(nome)) return nome;
+  const base = usandoFallback ? CONFIG.baseUrlFallback : CONFIG.baseUrl;
   let n = nome.trim().replace(/^\.?\//, '').replace(/^\/+/, '');
   n = n.replace(/[^a-zA-Z0-9\-_.]/g, '');
   if (!n) return '';
-  return CONFIG.baseUrl + n;
+  return base + n;
 }
 
 function gerarUrlsAlternativas(m) {
@@ -442,14 +440,31 @@ function renderFavList() {
 }
 
 /* ============================================================
-   PLAYLIST
+   PLAYLIST — tenta Pages, cai pra Raw se falhar
    ============================================================ */
+async function fetchJson(url) {
+  const res = await fetch(url, { cache: 'no-store' });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+}
+
 async function carregarPlaylist() {
   try {
     showLoading(true);
-    const res = await fetch(CONFIG.jsonUrl, { cache: 'no-store' });
-    if (!res.ok) throw new Error(`HTTP ${res.status} — ${CONFIG.jsonUrl}`);
-    let data = await res.json();
+    let data;
+    // 1) tenta Pages
+    try {
+      data = await fetchJson(CONFIG.jsonUrl);
+      usandoFallback = false;
+      console.log('✅ JSON carregado via GitHub Pages');
+    } catch (e1) {
+      console.warn('⚠️ Pages falhou, tentando Raw:', e1.message);
+      // 2) tenta Raw
+      data = await fetchJson(CONFIG.jsonUrlFallback);
+      usandoFallback = true;
+      console.log('✅ JSON carregado via Raw (fallback)');
+      showNotification('⚠️ Usando Raw — áudio pode não tocar em alguns navegadores', 3000);
+    }
 
     if (!Array.isArray(data)) {
       if (Array.isArray(data.musicas)) data = data.musicas;
@@ -467,7 +482,7 @@ async function carregarPlaylist() {
     return true;
   } catch (err) {
     console.error('❌ Erro playlist:', err);
-    splashMsg.innerHTML = `❌ ${err.message}<br><small style="color:#888">Verifique CONFIG.jsonUrl</small>`;
+    splashMsg.innerHTML = `❌ ${err.message}<br><small style="color:#888">Verifique se o GitHub Pages está ativo</small>`;
     return false;
   } finally {
     showLoading(false);
