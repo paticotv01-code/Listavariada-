@@ -28,15 +28,6 @@
   .audio-status .dot{width:4px;height:4px;border-radius:50%;background:#666}
   .audio-status.active .dot{background:#4ade80;animation:pulse-dot 1s infinite}
   @keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.3}}
-  .menu-button{background:rgba(255,255,255,.05);color:#fff;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.7rem;cursor:pointer;border:1px solid rgba(255,255,255,.2)}
-  .menu-button:active{background:var(--cor);color:#000}
-  .menu-popup{position:absolute;top:42px;right:8px;background:rgba(0,0,0,.95);backdrop-filter:blur(10px);border-radius:16px;padding:6px;z-index:32;display:none;flex-direction:column;gap:4px;border:1px solid var(--cor);min-width:180px;transition:border-color .3s}
-  .menu-popup.open{display:flex}
-  .menu-popup button{background:rgba(255,255,255,.08);border:none;color:#fff;padding:6px 12px;border-radius:30px;font-size:.6rem;display:flex;align-items:center;gap:6px;cursor:pointer;text-align:left}
-  .menu-popup button:active{background:var(--cor);color:#000}
-  .menu-popup .close-menu-btn{background:rgba(255,45,127,.2);border:1px solid #ff2d7f;color:#ff2d7f}
-  .menu-label{color:#888;font-size:.5rem;padding:4px 12px 2px;font-weight:700;letter-spacing:1px}
-  .genre-option.active{background:var(--cor)!important;color:#000!important;font-weight:700}
 
   .info-scroll{position:fixed;top:42px;left:0;right:0;background:rgba(0,0,0,.5);backdrop-filter:blur(8px);padding:6px 12px;z-index:30;border-bottom:1px solid rgba(255,255,255,.05);overflow:hidden;white-space:nowrap}
   .info-scroll p{color:#fff;font-size:.85rem;font-weight:900;letter-spacing:2px;animation:scrollText 20s linear infinite;display:inline-block;padding-right:50px;text-transform:uppercase}
@@ -82,10 +73,12 @@
   .fab-container{position:fixed;bottom:100px;right:12px;z-index:40;display:flex;flex-direction:column;align-items:flex-end;gap:6px}
   .fab-main{background:linear-gradient(135deg,#3a3a3a,#1a1a1a);width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#fff;font-size:1.2rem;border:1px solid rgba(255,255,255,.1)}
   .fab-main:active{transform:scale(.92)}
-  .fab-sub{background:rgba(0,0,0,.9);backdrop-filter:blur(14px);border-radius:30px;padding:5px;display:none;flex-direction:column;gap:3px;border:1px solid rgba(255,255,255,.1)}
+  .fab-sub{background:rgba(0,0,0,.92);backdrop-filter:blur(14px);border-radius:16px;padding:5px;display:none;flex-direction:column;gap:3px;border:1px solid rgba(255,255,255,.1);min-width:180px}
   .fab-sub.open{display:flex}
-  .fab-sub-btn{background:rgba(255,255,255,.05);border:none;color:#fff;padding:6px 14px;border-radius:25px;font-size:.65rem;cursor:pointer;display:flex;align-items:center;gap:6px;white-space:nowrap;min-width:100px}
+  .fab-section-label{color:rgba(255,255,255,.5);font-size:.55rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:6px 14px 2px}
+  .fab-sub-btn{background:rgba(255,255,255,.05);border:none;color:#fff;padding:8px 14px;border-radius:12px;font-size:.65rem;cursor:pointer;display:flex;align-items:center;gap:8px;white-space:nowrap;text-align:left}
   .fab-sub-btn:active{background:var(--cor);color:#000}
+  .genre-option.active{background:var(--cor)!important;color:#000!important;font-weight:700}
 
   #splash{position:fixed;inset:0;background:#0a0a0a;display:flex;align-items:center;justify-content:center;z-index:9999;transition:opacity .5s}
   #splash.hidden{opacity:0;pointer-events:none}
@@ -121,7 +114,7 @@
     .genre-badge{font-size:.45rem;max-width:30%;padding:2px 6px}
     .fav-top-btn{font-size:.45rem;padding:2px 6px}
     .fab-main{width:42px;height:42px;font-size:1rem}
-    .fab-sub-btn{padding:5px 10px;font-size:.55rem;min-width:85px}
+    .fab-sub-btn{padding:6px 10px;font-size:.6rem}
     .search-input{width:55px;font-size:.45rem}
     .search-input:focus{width:100px}
     .top-bar{padding:4px 6px}
@@ -134,7 +127,6 @@
     .bottom-controls{padding:4px 8px 8px}
     .audio-status{font-size:.4rem;padding:1px 4px}
     .fab-container{bottom:80px;right:8px}
-    .menu-button{width:24px;height:24px;font-size:.6rem}
     #tap-to-start{padding:10px 18px;font-size:.9rem;bottom:25%}
   }
 </style>
@@ -166,7 +158,6 @@
       <button class="fav-top-btn" id="favTopBtn">
         <i class="fas fa-heart"></i> <span class="badge" id="favCount">0</span>
       </button>
-      <div class="menu-button" id="menuButton"><i class="fas fa-ellipsis-v"></i></div>
     </div>
   </div>
 
@@ -209,27 +200,22 @@
 
 <div class="fab-container">
   <div class="fab-sub" id="fabSub">
-    <button class="fab-sub-btn" id="fabVoltar"><i class="fas fa-arrow-left"></i> Voltar ao PLAY 12</button>
+    <div class="fab-section-label">🎧 Gênero</div>
+    <button class="fab-sub-btn genre-option active" data-genre="variadas"><i class="fas fa-music"></i> Músicas Variadas</button>
+    <button class="fab-sub-btn genre-option" data-genre="rogervar"><i class="fas fa-bolt"></i> Rogervar</button>
+    <div class="fab-section-label">⚙️ Controles</div>
+    <button class="fab-sub-btn" id="fabFullscreen"><i class="fas fa-expand"></i> Tela Cheia</button>
+    <button class="fab-sub-btn" id="fabReload"><i class="fas fa-sync"></i> Recarregar Playlist</button>
     <button class="fab-sub-btn" id="fabShare"><i class="fas fa-share-alt"></i> Compartilhar</button>
   </div>
   <div class="fab-main" id="fabMain"><i class="fas fa-plus"></i></div>
 </div>
 
-<div class="menu-popup" id="menuPopup">
-  <button class="close-menu-btn" id="closeMenuBtn"><i class="fas fa-times"></i> Fechar</button>
-  <button id="fullscreenMenuBtn"><i class="fas fa-expand"></i> Tela Cheia</button>
-  <button id="reloadPlaylistBtn"><i class="fas fa-sync"></i> Recarregar Playlist</button>
-  <div class="menu-label">🎧 GÊNERO</div>
-  <button class="genre-option active" data-genre="variadas"><i class="fas fa-music"></i> Músicas Variadas</button>
-  <button class="genre-option" data-genre="rogervar"><i class="fas fa-bolt"></i> Rogervar</button>
-  <button id="voltarMenuBtn"><i class="fas fa-arrow-left"></i> Voltar ao PLAY 12</button>
-</div>
-
 <div class="notification" id="notification"></div>
 <div id="loadingOverlay"><i class="fas fa-spinner fa-spin"></i></div>
 
-<audio id="musicPlayer" preload="auto" crossorigin="anonymous"></audio>
-<audio id="backgroundAudio" preload="auto" style="display:none"></audio>
+<audio id="musicPlayer" preload="auto" playsinline></audio>
+<audio id="backgroundAudio" preload="auto" playsinline loop style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;top:-9999px;left:-9999px;"></audio>
 
 <script>
 const GENRES = {
@@ -257,7 +243,11 @@ const GENRES = {
 
 const CONFIG = {
   timeoutTentativa: 8000,
-  maxTentativasMostrar: 4
+  timeoutCache: 4000,
+  maxTentativasMostrar: 4,
+  keepAliveMs: 1000,
+  prefetchQtd: 3,
+  prefetchDelay: 2000
 };
 
 let currentGenre = 'variadas';
@@ -276,6 +266,9 @@ let carregandoMusica = false;
 let buscaTimeout = null;
 let tentativaAtual = null;
 let usandoFallback = false;
+let keepAliveInterval = null;
+let _currentBlobUrl = null;
+let _prefetchTimer = null;
 
 const $ = id => document.getElementById(id);
 const audio = $('musicPlayer');
@@ -290,7 +283,6 @@ const splash = $('splash');
 const splashMsg = $('splashMsg');
 const tapToStart = $('tap-to-start');
 const appContainer = $('appContainer');
-const menuButton = $('menuButton');
 const notification = $('notification');
 const audioStatus = $('audioStatus');
 const bottomControls = $('bottomControls');
@@ -303,7 +295,6 @@ const searchInput = $('searchInput');
 const clearSearchBtn = $('clearSearchBtn');
 const equalizer = $('equalizer');
 const loadingOverlay = $('loadingOverlay');
-const menuPopup = $('menuPopup');
 
 function getGenre() { return GENRES[currentGenre]; }
 
@@ -341,7 +332,6 @@ function goFullscreen() {
     else if (d.msRequestFullscreen) d.msRequestFullscreen();
   } catch (e) {}
 }
-function voltarPlay12() { window.location.href = 'https://radiolojasjc-hub.github.io/play12/'; }
 
 function urlCompleta(nome) {
   if (!nome || !nome.trim()) return '';
@@ -377,6 +367,48 @@ function gerarUrlsAlternativas(m) {
   return Array.from(urls);
 }
 
+/* ===== CACHE ===== */
+const CACHE_NAME = 'play12-offline-v1';
+async function getCache() {
+  if (!('caches' in window)) return null;
+  try { return await caches.open(CACHE_NAME); } catch(e) { return null; }
+}
+
+/* ===== PREFETCH ===== */
+function agendarPrefetch() {
+  clearTimeout(_prefetchTimer);
+  _prefetchTimer = setTimeout(prefetchProximas, CONFIG.prefetchDelay);
+}
+async function prefetchProximas() {
+  if (!navigator.onLine || !musicas.length || !currentPlaylist.length) return;
+  const cache = await getCache();
+  if (!cache) return;
+  for (let i = 0; i < CONFIG.prefetchQtd; i++) {
+    const idx = currentIndex + i;
+    if (idx >= currentPlaylist.length) break;
+    const m = currentPlaylist[idx];
+    if (!m) continue;
+    const url = urlCompleta(m.src);
+    if (!url) continue;
+    try {
+      const existing = await cache.match(url);
+      if (existing) continue;
+      const r = await fetch(url, { mode: 'cors' });
+      if (!r.ok) continue;
+      const blob = await r.blob();
+      if (blob.size < 500) continue;
+      const tipo = blob.type || '';
+      if (tipo.includes('text/html') || tipo.includes('application/json')) continue;
+      const tipoFinal = tipo.startsWith('audio/') ? tipo : 'audio/mpeg';
+      await cache.put(url, new Response(new Blob([blob], { type: tipoFinal }), {
+        status: 200,
+        headers: { 'Content-Type': tipoFinal, 'Content-Length': String(blob.size) }
+      }));
+    } catch (e) {}
+  }
+}
+
+/* ===== FAVORITOS ===== */
 function carregarDadosLocais() {
   const g = getGenre();
   try { favorites = JSON.parse(localStorage.getItem(g.storageKeyFav) || '[]'); } catch { favorites = []; }
@@ -442,6 +474,7 @@ function renderFavList() {
   });
 }
 
+/* ===== PLAYLIST ===== */
 async function fetchJson(url) {
   const res = await fetch(url, { cache: 'no-store' });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -500,12 +533,73 @@ function proximaDaPlaylist() {
   return m;
 }
 
+/* ===== NOW PLAYING ===== */
 function updateNowPlaying(m) {
   if (!m) return;
   nowTitle.textContent = m.title;
   nowArtist.textContent = m.artist;
   scrollText.innerHTML = `🎵 ${m.title} — ${m.artist} [${getGenre().nome}] 🎵`;
   updateHeartIcon(m.id);
+}
+
+/* ===== PLAYER ===== */
+function revogarBlobAnterior() {
+  if (_currentBlobUrl) {
+    try { URL.revokeObjectURL(_currentBlobUrl); } catch(e) {}
+    _currentBlobUrl = null;
+  }
+}
+
+function tentarSrc(src, timeoutMs) {
+  return new Promise(resolve => {
+    let resolvido = false;
+    const finalize = ok => {
+      if (resolvido) return;
+      resolvido = true;
+      clearTimeout(timeoutId);
+      audio.oncanplay = null;
+      audio.onerror = null;
+      resolve(ok);
+    };
+    const timeoutId = setTimeout(() => {
+      try { audio.pause(); } catch(e) {}
+      finalize(false);
+    }, timeoutMs);
+    audio.oncanplay = () => {
+      audio.play().then(() => finalize(true)).catch(() => finalize(false));
+    };
+    audio.onerror = () => finalize(false);
+    try { audio.pause(); } catch(e) {}
+    audio.src = src;
+    audio.load();
+  });
+}
+
+async function tentarUrl(url) {
+  /* 1) tenta cache primeiro */
+  try {
+    const cache = await getCache();
+    if (cache) {
+      const resp = await cache.match(url);
+      if (resp) {
+        const blob = await resp.blob();
+        if (blob.size > 500) {
+          const blobUrl = URL.createObjectURL(blob);
+          const ok = await tentarSrc(blobUrl, CONFIG.timeoutCache);
+          if (ok) {
+            revogarBlobAnterior();
+            _currentBlobUrl = blobUrl;
+            return true;
+          }
+          try { URL.revokeObjectURL(blobUrl); } catch(e) {}
+        }
+      }
+    }
+  } catch(e) {}
+
+  /* 2) tenta rede */
+  if (!navigator.onLine) return false;
+  return await tentarSrc(url, CONFIG.timeoutTentativa);
 }
 
 async function playMusic() {
@@ -550,37 +644,13 @@ async function tentarTocarUrls(track, urls) {
         srcCache[track.id] = url;
         salvarSrcCache();
       }
+      agendarPrefetch();
       return;
     }
   }
   showNotification('⏭️ Pulando música', 900);
   carregandoMusica = false;
   setTimeout(nextTrack, 300);
-}
-
-function tentarUrl(url) {
-  return new Promise(resolve => {
-    let resolvido = false;
-    const finalize = ok => {
-      if (resolvido) return;
-      resolvido = true;
-      clearTimeout(timeoutId);
-      audio.oncanplay = null;
-      audio.onerror = null;
-      resolve(ok);
-    };
-    const timeoutId = setTimeout(() => {
-      audio.pause();
-      finalize(false);
-    }, CONFIG.timeoutTentativa);
-    audio.oncanplay = () => {
-      audio.play().then(() => finalize(true)).catch(() => finalize(false));
-    };
-    audio.onerror = () => finalize(false);
-    audio.pause();
-    audio.src = url;
-    audio.load();
-  });
 }
 
 function nextTrack() {
@@ -638,9 +708,10 @@ function playSongById(id) {
   if (!m) { showNotification('Música não encontrada', 1000); return; }
   if (carregandoMusica && tentativaAtual) tentativaAtual.cancel();
   carregandoMusica = false;
-  audio.pause();
+  try { audio.pause(); } catch(e) {}
   audio.removeAttribute('src');
-  audio.load();
+  try { audio.load(); } catch(e) {}
+  revogarBlobAnterior();
   const outras = musicas.filter(x => x.id !== id);
   currentPlaylist = shuffleArray([m, ...outras]);
   currentIndex = 1;
@@ -667,9 +738,10 @@ function stopTimer() {
   timerInterval = null;
 }
 
+/* ===== SILENT AUDIO ===== */
 function silentWavUrl() {
   try {
-    const sr = 44100, ns = sr;
+    const sr = 44100, ns = sr * 2;
     const buf = new ArrayBuffer(44 + ns * 2);
     const v = new DataView(buf);
     const w = (o, s) => { for (let i = 0; i < s.length; i++) v.setUint8(o + i, s.charCodeAt(i)); };
@@ -683,6 +755,22 @@ function silentWavUrl() {
   } catch { return ''; }
 }
 
+/* ===== KEEP ALIVE (mantém áudio com tela bloqueada) ===== */
+function manterAtivo() {
+  if (keepAliveInterval) clearInterval(keepAliveInterval);
+  keepAliveInterval = setInterval(async () => {
+    if (!isBackgroundActive) return;
+    try {
+      if (backgroundAudio.paused && backgroundAudio.src) {
+        try { await backgroundAudio.play(); } catch(e) {}
+      }
+      if (isPlaying && audio.paused && !carregandoMusica && audio.currentSrc && audio.currentSrc !== location.href) {
+        try { await audio.play(); } catch(e) {}
+      }
+    } catch(e) {}
+  }, CONFIG.keepAliveMs);
+}
+
 async function ativarAudio() {
   try {
     showLoading(true);
@@ -690,7 +778,7 @@ async function ativarAudio() {
     if (silent) {
       backgroundAudio.src = silent;
       backgroundAudio.loop = true;
-      backgroundAudio.volume = 0.001;
+      backgroundAudio.volume = 0.01;
       await backgroundAudio.play();
     }
     isBackgroundActive = true;
@@ -698,6 +786,7 @@ async function ativarAudio() {
     audioStatus.innerHTML = '<span class="dot"></span> Ativado';
     if ('wakeLock' in navigator) { try { await navigator.wakeLock.request('screen'); } catch {} }
     showLoading(false);
+    manterAtivo();
     await playMusic();
     return true;
   } catch (err) {
@@ -707,6 +796,7 @@ async function ativarAudio() {
   }
 }
 
+/* ===== BUSCA ===== */
 function buscarMusica(termo) {
   const tl = termo.toLowerCase().trim();
   if (tl.length < 2) { showNotification('📋 Mínimo 2 caracteres', 1000); return; }
@@ -750,17 +840,19 @@ async function recarregarPlaylist() {
   }
 }
 
+/* ===== TROCA DE GÊNERO ===== */
 async function trocarGenero(genreKey) {
   if (!GENRES[genreKey] || genreKey === currentGenre) {
-    menuPopup.classList.remove('open');
+    fecharFab();
     return;
   }
   showNotification(`🔄 Carregando ${GENRES[genreKey].nome}...`, 1500);
   if (carregandoMusica && tentativaAtual) tentativaAtual.cancel();
   carregandoMusica = false;
-  audio.pause();
+  try { audio.pause(); } catch(e) {}
   audio.removeAttribute('src');
-  audio.load();
+  try { audio.load(); } catch(e) {}
+  revogarBlobAnterior();
   stopTimer();
 
   currentGenre = genreKey;
@@ -782,9 +874,10 @@ async function trocarGenero(genreKey) {
     if (isBackgroundActive) playMusic();
     showNotification(`✅ ${GENRES[genreKey].nome}: ${musicas.length} músicas`, 1800);
   }
-  menuPopup.classList.remove('open');
+  fecharFab();
 }
 
+/* ===== INICIAR ===== */
 async function iniciar() {
   try {
     carregarDadosLocais();
@@ -810,6 +903,7 @@ async function iniciar() {
   }
 }
 
+/* ===== EVENTOS DE ÁUDIO ===== */
 audio.addEventListener('play', () => {
   isPlaying = true;
   playBtn.innerHTML = '<i class="fas fa-pause"></i>';
@@ -817,13 +911,19 @@ audio.addEventListener('play', () => {
   startTimer();
 });
 audio.addEventListener('pause', () => {
-  isPlaying = false;
-  playBtn.innerHTML = '<i class="fas fa-play"></i>';
-  equalizer.classList.add('paused');
-  stopTimer();
+  /* Só marca como false se não estamos em transição */
+  if (!carregandoMusica) {
+    isPlaying = false;
+    playBtn.innerHTML = '<i class="fas fa-play"></i>';
+    equalizer.classList.add('paused');
+    stopTimer();
+  }
 });
-audio.addEventListener('ended', () => { if (!carregandoMusica) nextTrack(); });
+audio.addEventListener('ended', () => {
+  if (!carregandoMusica) nextTrack();
+});
 
+/* ===== FAVORITOS UI ===== */
 heartBtn.addEventListener('click', () => {
   const m = currentPlaylist[currentIndex - 1] || currentPlaylist[0];
   if (m) toggleFavorito(m.id);
@@ -832,36 +932,47 @@ $('favTopBtn').addEventListener('click', () => { renderFavList(); $('favModal').
 $('closeFavModal').addEventListener('click', () => $('favModal').classList.remove('open'));
 $('closeFavBtn').addEventListener('click', () => $('favModal').classList.remove('open'));
 
+/* ===== FAB MENU ===== */
 const fabMain = $('fabMain'), fabSub = $('fabSub');
+function fecharFab() {
+  fabOpen = false;
+  fabSub.classList.remove('open');
+  fabMain.innerHTML = '<i class="fas fa-plus"></i>';
+}
 fabMain.addEventListener('click', () => {
   fabOpen = !fabOpen;
   fabSub.classList.toggle('open', fabOpen);
   fabMain.innerHTML = fabOpen ? '<i class="fas fa-times"></i>' : '<i class="fas fa-plus"></i>';
 });
-$('fabVoltar').addEventListener('click', voltarPlay12);
-$('voltarMenuBtn').addEventListener('click', voltarPlay12);
+
+$('fabFullscreen').addEventListener('click', () => {
+  fecharFab();
+  goFullscreen();
+  showNotification('⛶ Tela cheia', 1000);
+});
+$('fabReload').addEventListener('click', () => {
+  fecharFab();
+  recarregarPlaylist();
+});
 $('fabShare').addEventListener('click', () => {
   const t = currentPlaylist[currentIndex - 1] || currentPlaylist[0];
-  if (!t) return showNotification('Nada tocando', 1000);
+  if (!t) { fecharFab(); return showNotification('Nada tocando', 1000); }
   const msg = `🎵 Ouvindo "${t.title}" - ${t.artist} no PLAY 12 ${getGenre().nome} 🎧`;
   if (navigator.share) navigator.share({ title: `PLAY 12 — ${getGenre().nome}`, text: msg, url: location.href }).catch(() => {});
   else navigator.clipboard.writeText(msg + ' ' + location.href)
     .then(() => showNotification('📋 Copiado!', 2000))
     .catch(() => showNotification('Compartilhamento indisponível', 1200));
-  fabMain.click();
+  fecharFab();
+});
+document.querySelectorAll('.genre-option').forEach(btn => {
+  btn.addEventListener('click', () => trocarGenero(btn.dataset.genre));
 });
 
+/* ===== CONTROLES ===== */
 playBtn.addEventListener('click', togglePlay);
 $('nextBtn').addEventListener('click', nextTrack);
 $('prevBtn').addEventListener('click', prevTrack);
 shuffleBtn.addEventListener('click', toggleShuffle);
-
-$('fullscreenMenuBtn').addEventListener('click', () => { menuPopup.classList.remove('open'); goFullscreen(); showNotification('⛶ Tela cheia', 1000); });
-$('reloadPlaylistBtn').addEventListener('click', () => { menuPopup.classList.remove('open'); recarregarPlaylist(); });
-
-document.querySelectorAll('.genre-option').forEach(btn => {
-  btn.addEventListener('click', () => trocarGenero(btn.dataset.genre));
-});
 
 $('progressBar').addEventListener('click', e => {
   if (audio.duration && isFinite(audio.duration)) {
@@ -882,15 +993,10 @@ searchInput.addEventListener('input', e => {
 });
 clearSearchBtn.addEventListener('click', () => { limparBusca(); searchInput.focus(); });
 
-menuButton.addEventListener('click', e => {
-  e.stopPropagation();
-  menuPopup.classList.toggle('open');
-  showControls();
-});
-$('closeMenuBtn').addEventListener('click', () => menuPopup.classList.remove('open'));
+/* Fecha FAB ao clicar fora */
 document.addEventListener('click', e => {
-  if (menuPopup.classList.contains('open') && !menuPopup.contains(e.target) && e.target !== menuButton) {
-    menuPopup.classList.remove('open');
+  if (fabSub.classList.contains('open') && !fabSub.contains(e.target) && e.target !== fabMain && !fabMain.contains(e.target)) {
+    fecharFab();
   }
   showControls();
 });
@@ -929,6 +1035,43 @@ $('nowPlaying').addEventListener('click', () => {
 
 $('favModal').addEventListener('click', e => {
   if (e.target === $('favModal')) $('favModal').classList.remove('open');
+});
+
+/* ===== BACKGROUND RESUME ===== */
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') {
+    try {
+      if (backgroundAudio.paused && backgroundAudio.src && isBackgroundActive) {
+        backgroundAudio.play().catch(() => {});
+      }
+    } catch(e) {}
+    if (isBackgroundActive && isPlaying && audio.paused && !carregandoMusica && audio.currentSrc) {
+      audio.play().catch(() => {});
+    }
+    if ('wakeLock' in navigator && isPlaying) {
+      try { navigator.wakeLock.request('screen').catch(() => {}); } catch(e) {}
+    }
+  } else {
+    try {
+      if (backgroundAudio.paused && backgroundAudio.src && isBackgroundActive) {
+        backgroundAudio.play().catch(() => {});
+      }
+    } catch(e) {}
+  }
+});
+
+window.addEventListener('pageshow', () => {
+  if (isBackgroundActive && isPlaying && audio.paused && !carregandoMusica && audio.currentSrc) {
+    audio.play().catch(() => {});
+  }
+  try {
+    if (backgroundAudio.paused && backgroundAudio.src) backgroundAudio.play().catch(() => {});
+  } catch(e) {}
+});
+
+window.addEventListener('beforeunload', () => {
+  if (keepAliveInterval) clearInterval(keepAliveInterval);
+  clearTimeout(_prefetchTimer);
 });
 
 window.addEventListener('load', iniciar);
