@@ -36,7 +36,7 @@
   .menu-popup button:active{background:var(--cor);color:#000}
   .menu-popup .close-menu-btn{background:rgba(255,45,127,.2);border:1px solid #ff2d7f;color:#ff2d7f}
   .menu-label{color:#888;font-size:.5rem;padding:4px 12px 2px;font-weight:700;letter-spacing:1px}
-  .genre-option.active{background:var(--cor);color:#000;font-weight:700}
+  .genre-option.active{background:var(--cor)!important;color:#000!important;font-weight:700}
 
   .info-scroll{position:fixed;top:42px;left:0;right:0;background:rgba(0,0,0,.5);backdrop-filter:blur(8px);padding:6px 12px;z-index:30;border-bottom:1px solid rgba(255,255,255,.05);overflow:hidden;white-space:nowrap}
   .info-scroll p{color:#fff;font-size:.85rem;font-weight:900;letter-spacing:2px;animation:scrollText 20s linear infinite;display:inline-block;padding-right:50px;text-transform:uppercase}
@@ -232,9 +232,6 @@
 <audio id="backgroundAudio" preload="auto" style="display:none"></audio>
 
 <script>
-/* ============================================================
-   CONFIG — múltiplos gêneros
-   ============================================================ */
 const GENRES = {
   variadas: {
     nome: 'MÚSICAS VARIADAS',
@@ -263,9 +260,6 @@ const CONFIG = {
   maxTentativasMostrar: 4
 };
 
-/* ============================================================
-   ESTADO
-   ============================================================ */
 let currentGenre = 'variadas';
 let musicas = [];
 let currentPlaylist = [];
@@ -311,9 +305,8 @@ const equalizer = $('equalizer');
 const loadingOverlay = $('loadingOverlay');
 const menuPopup = $('menuPopup');
 
-/* ============================================================
-   HELPERS
-   ============================================================ */
+function getGenre() { return GENRES[currentGenre]; }
+
 function showNotification(msg, d = 1500) {
   notification.textContent = msg;
   notification.classList.add('show');
@@ -349,11 +342,7 @@ function goFullscreen() {
   } catch (e) {}
 }
 function voltarPlay12() { window.location.href = 'https://radiolojasjc-hub.github.io/play12/'; }
-function getGenre() { return GENRES[currentGenre]; }
 
-/* ============================================================
-   URL BUILDER
-   ============================================================ */
 function urlCompleta(nome) {
   if (!nome || !nome.trim()) return '';
   if (/^https?:\/\//i.test(nome)) return nome;
@@ -388,9 +377,6 @@ function gerarUrlsAlternativas(m) {
   return Array.from(urls);
 }
 
-/* ============================================================
-   FAVORITOS (por gênero)
-   ============================================================ */
 function carregarDadosLocais() {
   const g = getGenre();
   try { favorites = JSON.parse(localStorage.getItem(g.storageKeyFav) || '[]'); } catch { favorites = []; }
@@ -456,9 +442,6 @@ function renderFavList() {
   });
 }
 
-/* ============================================================
-   PLAYLIST
-   ============================================================ */
 async function fetchJson(url) {
   const res = await fetch(url, { cache: 'no-store' });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -472,12 +455,9 @@ async function carregarPlaylist() {
     try {
       data = await fetchJson(g.jsonUrl);
       usandoFallback = false;
-      console.log(`✅ JSON [${g.nome}] via GitHub Pages`);
     } catch (e1) {
-      console.warn(`⚠️ Pages falhou [${g.nome}], tentando Raw:`, e1.message);
       data = await fetchJson(g.jsonUrlFallback);
       usandoFallback = true;
-      console.log(`✅ JSON [${g.nome}] via Raw`);
       showNotification('⚠️ Usando Raw — pode não tocar em alguns navegadores', 3000);
     }
     if (!Array.isArray(data)) {
@@ -490,11 +470,9 @@ async function carregarPlaylist() {
       m.id = m.id || `mv_${Math.random().toString(36).slice(2, 8)}`;
       m.artist = m.artist || 'Artista desconhecido';
     });
-    console.log(`✅ ${musicas.length} músicas [${g.nome}]`);
     if (musicas.length === 0) throw new Error('Nenhuma música válida no JSON');
     return true;
   } catch (err) {
-    console.error('❌ Erro playlist:', err);
     splashMsg.innerHTML = `❌ ${err.message}<br><small style="color:#888">Verifique se o JSON existe no repositório</small>`;
     return false;
   } finally {
@@ -522,9 +500,6 @@ function proximaDaPlaylist() {
   return m;
 }
 
-/* ============================================================
-   PLAYER
-   ============================================================ */
 function updateNowPlaying(m) {
   if (!m) return;
   nowTitle.textContent = m.title;
@@ -677,9 +652,6 @@ function playSongById(id) {
   showNotification(`🎵 ${m.title}`, 1200);
 }
 
-/* ============================================================
-   TIMER
-   ============================================================ */
 function startTimer() {
   stopTimer();
   timerInterval = setInterval(() => {
@@ -695,9 +667,6 @@ function stopTimer() {
   timerInterval = null;
 }
 
-/* ============================================================
-   ÁUDIO
-   ============================================================ */
 function silentWavUrl() {
   try {
     const sr = 44100, ns = sr;
@@ -738,9 +707,6 @@ async function ativarAudio() {
   }
 }
 
-/* ============================================================
-   BUSCA
-   ============================================================ */
 function buscarMusica(termo) {
   const tl = termo.toLowerCase().trim();
   if (tl.length < 2) { showNotification('📋 Mínimo 2 caracteres', 1000); return; }
@@ -770,9 +736,6 @@ function limparBusca() {
   showNotification('📋 Playlist restaurada', 800);
 }
 
-/* ============================================================
-   RECARREGAR / TROCAR GÊNERO
-   ============================================================ */
 async function recarregarPlaylist() {
   showNotification('🔄 Recarregando...', 1200);
   if (carregandoMusica && tentativaAtual) tentativaAtual.cancel();
@@ -801,16 +764,14 @@ async function trocarGenero(genreKey) {
   stopTimer();
 
   currentGenre = genreKey;
-  // Atualiza cor do tema
   document.documentElement.style.setProperty('--cor', GENRES[genreKey].cor);
   genreBadge.innerHTML = `🎧 ${GENRES[genreKey].nome}`;
   scrollText.innerHTML = `🎵 RÁDIO PLAY 12 — ${GENRES[genreKey].nome} 🎵`;
   document.title = `PLAY 12 — ${GENRES[genreKey].nome}`;
-  // Atualiza opção ativa no menu
   document.querySelectorAll('.genre-option').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.genre === genreKey);
   });
-  // Recarrega favoritos/playlist do gênero
+
   carregarDadosLocais();
   const ok = await carregarPlaylist();
   if (ok) {
@@ -824,9 +785,6 @@ async function trocarGenero(genreKey) {
   menuPopup.classList.remove('open');
 }
 
-/* ============================================================
-   INICIAR
-   ============================================================ */
 async function iniciar() {
   try {
     carregarDadosLocais();
@@ -848,14 +806,10 @@ async function iniciar() {
       }, 400);
     }, 400);
   } catch (err) {
-    console.error('iniciar:', err);
     splashMsg.innerHTML = `❌ ${err.message}<br><button onclick="location.reload()" style="margin-top:10px;padding:8px 20px;border-radius:20px;border:none;background:${getGenre().cor};color:#000;font-weight:bold">Recarregar</button>`;
   }
 }
 
-/* ============================================================
-   EVENTOS
-   ============================================================ */
 audio.addEventListener('play', () => {
   isPlaying = true;
   playBtn.innerHTML = '<i class="fas fa-pause"></i>';
@@ -905,7 +859,6 @@ shuffleBtn.addEventListener('click', toggleShuffle);
 $('fullscreenMenuBtn').addEventListener('click', () => { menuPopup.classList.remove('open'); goFullscreen(); showNotification('⛶ Tela cheia', 1000); });
 $('reloadPlaylistBtn').addEventListener('click', () => { menuPopup.classList.remove('open'); recarregarPlaylist(); });
 
-// Seletor de gênero
 document.querySelectorAll('.genre-option').forEach(btn => {
   btn.addEventListener('click', () => trocarGenero(btn.dataset.genre));
 });
